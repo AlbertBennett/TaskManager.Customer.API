@@ -6,8 +6,8 @@ namespace TaskManager.Customer.API.Models
     {
         public int ID { get; set; }
 
-        public string ISOCode { get; set; }
+        public required string ISOCode { get; set; }
 
-        public string Name { get; set; }
+        public required string Name { get; set; }
     }
 }

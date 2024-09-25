@@ -5,6 +5,7 @@ namespace TaskManager.Customer.API
     public sealed class CustomerDBContext : DbContext
     {
         public DbSet<Customer.API.Models.Customer> Customer { get; private set; }
+        public DbSet<Customer.API.Models.Country> Countries { get; private set; }
 
         public CustomerDBContext(DbContextOptions<CustomerDBContext> options) : base(options) { }
 

@@ -4,12 +4,12 @@ namespace TaskManager.Customer.API.Repositories.Abstractions
 {
     public interface ICustomerRepository
     {
-        Task<Models.Customer?> GetCustomerById(int id);
+        Task<Models.Customer?> GetCustomerByIdAsync(int id);
 
-        Task<bool> CustomerExistsWithEmail(string emailAddress);
+        Task<bool> CustomerExistsWithEmailAsync(string emailAddress);
 
-        Task<bool> RegisterNewCustomer(string firstName, string lastName, string email, Country country);
+        Task<bool> RegisterNewCustomerAsync(string firstName, string lastName, string email, Country country);
 
-        Task<bool> DeleteCustomer(int id);
+        Task<bool> DeleteCustomerAsync(int id);
     }
 }

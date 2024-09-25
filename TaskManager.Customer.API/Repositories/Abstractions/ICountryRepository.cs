@@ -4,8 +4,8 @@ namespace TaskManager.Customer.API.Repositories.Abstractions
 {
     public interface ICountryRepository
     {
-        Task<Country?> GetCountryByCountryCode(string countryCode);
-        Task<Country?> GetCountryByID(int id);
-        Task<Country?> GetCountryByName(string name);
+        Task<Country?> GetCountryByCountryCodeAsync(string countryCode);
+        Task<Country?> GetCountryByIDAsync(int id);
+        Task<Country?> GetCountryByNameAsync(string name);
     }
 }

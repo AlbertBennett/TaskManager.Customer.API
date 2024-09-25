@@ -8,17 +8,17 @@ namespace TaskManager.Customer.API.Repositories
     {
         private readonly CustomerDBContext _customerDBContext = customerDBContext;
 
-        public async Task<Country?> GetCountryByID(int id)
+        public async Task<Country?> GetCountryByIDAsync(int id)
         {
             return await _customerDBContext.Countries.FirstOrDefaultAsync(c => c.ID.Equals(id));
         }
 
-        public async Task<Country?> GetCountryByCountryCode(string countryCode)
+        public async Task<Country?> GetCountryByCountryCodeAsync(string countryCode)
         {
             return await _customerDBContext.Countries.FirstOrDefaultAsync(c => c.ISOCode.Equals(countryCode));
         }
 
-        public async Task<Country?> GetCountryByName(string name)
+        public async Task<Country?> GetCountryByNameAsync(string name)
         {
             return await _customerDBContext.Countries.FirstOrDefaultAsync(c => c.Name.Equals(name));
         }

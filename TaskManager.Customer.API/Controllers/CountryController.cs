@@ -21,8 +21,8 @@ namespace TaskManager.Customer.API.Controllers
                 return BadRequest("\"name\" query parameter needs to be supplied");
             }
 
-            Country? result = name.Length > 3 ? await _countryRepository.GetCountryByName(name) :
-                    await _countryRepository.GetCountryByCountryCode(name);
+            Country? result = name.Length >= 3 ? await _countryRepository.GetCountryByNameAsync(name) :
+                    await _countryRepository.GetCountryByCountryCodeAsync(name);
 
             return result != null ? Ok(result) : NotFound();
         }
@@ -30,12 +30,12 @@ namespace TaskManager.Customer.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int? id)
         {
-            if (id != null || id < 0)
+            if (id == null || id < 0)
             {
-                return BadRequest("\"Id\" query parameter needs to be supplied with a possitive number");
+                return BadRequest("\"Id\" query parameter needs to be supplied with a positive number");
             }
 
-            Country? result = await _countryRepository.GetCountryByID(id.Value);
+            Country? result = await _countryRepository.GetCountryByIDAsync(id.Value);
 
             return result != null ? Ok(result) : NotFound();
         }

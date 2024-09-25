@@ -18,19 +18,43 @@ namespace TaskManager.Customer.API.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterNewCustomer([FromBody] CustomerDTO customerDto)
         {
-            if (await _customerRepository.CustomerExistsWithEmail(customerDto.Email))
+            if (customerDto == null) {
+                return BadRequest("You need to provide the customers FirstName, LatsName, Email and CountryCode in the request body to register them");
+            }
+
+            if (customerDto.FirstName == null || customerDto.FirstName.Equals(string.Empty))
+            {
+                return BadRequest("You need to provide the customer FirstName in the request body for them to be registered on the system");
+            }
+
+            if (customerDto.LastName == null || customerDto.LastName.Equals(string.Empty))
+            {
+                return BadRequest("You need to provide the customer LastName in the request body for them to be registered on the system");
+            }
+
+            if (customerDto.CountryCode == null || customerDto.CountryCode.Equals(string.Empty))
+            {
+                return BadRequest("You need to provide the customer CountryCode (IE, UK, etc) address in the request body for them to be registered on the system");
+            }
+
+            if (customerDto.Email == null || customerDto.Email.Equals(string.Empty))
+            {
+                return BadRequest("You need to provide the customer Email address in the request body for them to be registered on the system");
+            }
+
+            if (await _customerRepository.CustomerExistsWithEmailAsync(customerDto.Email))
             {
                 return BadRequest("A customer with that email address already exists");
             }
 
-            Country? country = await _countryRepository.GetCountryByCountryCode(customerDto.CountryCode);
+            Country? country = await _countryRepository.GetCountryByCountryCodeAsync(customerDto.CountryCode);
 
             if (country == null)
             {
                 return BadRequest($"A country with the code: {customerDto.CountryCode} does not exist");
             }
 
-            bool result = await _customerRepository.RegisterNewCustomer(
+            bool result = await _customerRepository.RegisterNewCustomerAsync(
                 customerDto.FirstName, customerDto.LastName, customerDto.Email, country);
 
             return result ? Ok() : BadRequest("Unable to register the new customer");
@@ -39,9 +63,14 @@ namespace TaskManager.Customer.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
-            Models.Customer? customer = await _customerRepository.GetCustomerById(id);
+            if(id < 0)
+            {
+                return BadRequest($"The \"id\" parameter needs to be a positive number");
+            }
 
-            return customer == null ? BadRequest($"A customer with id: {id} does not exist") : Ok(customer);
+            Models.Customer? customer = await _customerRepository.GetCustomerByIdAsync(id);
+
+            return customer == null ? NotFound() : Ok(customer);
         }
     }
 }

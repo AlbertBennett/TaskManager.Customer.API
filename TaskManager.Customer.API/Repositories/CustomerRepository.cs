@@ -11,17 +11,17 @@ namespace TaskManager.Customer.API.Repositories
 
         private readonly ILogger<CustomerRepository> _logger = logger;
 
-        public async Task<Models.Customer?> GetCustomerById(int id)
+        public async Task<Models.Customer?> GetCustomerByIdAsync(int id)
         {
             return await _customerDBContext.Customer.FirstOrDefaultAsync(x => x.ID.Equals(id));
         }
 
-        public async Task<bool> CustomerExistsWithEmail(string emailAddress)
+        public async Task<bool> CustomerExistsWithEmailAsync(string emailAddress)
         {
             return await _customerDBContext.Customer.FirstOrDefaultAsync(x => x.Email.ToLower().Equals(emailAddress.ToLower())) != null;
         }
 
-        public async Task<bool> RegisterNewCustomer(string firstName, string lastName, string email, Country country)
+        public async Task<bool> RegisterNewCustomerAsync(string firstName, string lastName, string email, Country country)
         {
             if (await _customerDBContext.Customer.AnyAsync(x => x.Email.ToLower().Equals(email.ToLower())))
             {
@@ -51,7 +51,7 @@ namespace TaskManager.Customer.API.Repositories
             return false;
         }
 
-        public async Task<bool> DeleteCustomer(int id)
+        public async Task<bool> DeleteCustomerAsync(int id)
         {
             if (await _customerDBContext.Customer.AnyAsync(x => x.ID.Equals(id)))
             {
@@ -60,7 +60,7 @@ namespace TaskManager.Customer.API.Repositories
 
             try
             {
-                var customer = await GetCustomerById(id);
+                var customer = await GetCustomerByIdAsync(id);
 
                 if (customer == null)
                 {

@@ -17,5 +17,10 @@ namespace TaskManager.Customer.API.Repositories
         {
             return await _customerDBContext.Countries.FirstOrDefaultAsync(c => c.ISOCode.Equals(countryCode));
         }
+
+        public async Task<Country?> GetCountryByName(string name)
+        {
+            return await _customerDBContext.Countries.FirstOrDefaultAsync(c => c.Name.Equals(name));
+        }
     }
 }

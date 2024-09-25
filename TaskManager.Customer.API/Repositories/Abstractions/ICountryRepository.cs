@@ -6,5 +6,6 @@ namespace TaskManager.Customer.API.Repositories.Abstractions
     {
         Task<Country?> GetCountryByCountryCode(string countryCode);
         Task<Country?> GetCountryByID(int id);
+        Task<Country?> GetCountryByName(string name);
     }
 }
